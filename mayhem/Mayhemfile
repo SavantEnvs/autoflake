@@ -1,0 +1,12 @@
+project: savantenvs/autoflake
+target: check-fuzz
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/check-fuzz/testsuite
+cmds:
+  - cmd: /mayhem/check-fuzz
+    libfuzzer: true
+    # CPython + Atheris instrumentation startup is slow on Mayhem workers; the default
+    # per-exec timeout trips the "printing options" sanity check (run #4). Give the
+    # interpreter room to boot.
+    timeout: 60
